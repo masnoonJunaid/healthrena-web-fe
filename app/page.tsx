@@ -9,13 +9,13 @@ export default function Home() {
       <div className="w-full px-4 sm:px-8 md:px-16 lg:px-28 text-center max-w-5xl mx-auto">
         <h1 className={title({ class: "leading-tight text-center break-normal !text-2xl sm:!text-3xl md:!text-4xl lg:!text-5xl block w-full" })}>
           <span className="inline">Less </span>
-          <span className={title({ color: "violet", class: "inline" })}>paperwork </span>
+          <span className="inline">paperwork </span>
           <span className="inline">and </span>
           <span className="inline">administrative burden, </span>
           <span className="inline">more </span>
-          <span className={title({ color: "violet", class: "inline" })}>patient care </span>
-          <span className="inline">and clinical </span>
-          <span className={title({ color: "violet", class: "inline" })}>efficiency.</span>
+          <span className="inline">patient care and </span>
+          <span className={title({ color: "violet", class: "inline" })}>clinical efficiency.</span>
+          {/* <span className="inline">efficiency.</span> */}
         </h1>
         <div className={subtitle({ class: "mt-6 text-base sm:text-lg leading-relaxed text-center break-normal" })}>
           Software built for doctors, by people who understand healthcare operations.
