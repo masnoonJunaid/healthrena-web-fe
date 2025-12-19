@@ -44,7 +44,7 @@ const DepartmentNode = ({ label, color, position, icon: Icon }: any) => (
 
 const HospitalVisualizer = () => {
   return (
-    <div className="relative w-full h-[550px] bg-sky-50/50 dark:bg-background overflow-hidden rounded-3xl border-[0.4px] border-divider shadow-2xl transition-colors duration-500">
+    <div className="relative w-full h-[350px] md:h-[450px] lg:h-[550px] bg-sky-50/50 dark:bg-background overflow-hidden rounded-3xl border-[0.4px] border-divider shadow-2xl transition-colors duration-500">
       {/* Background Decor - Refined Grid adapts to theme */}
       <div className="absolute inset-0 opacity-[0.15] dark:opacity-10"
         style={{
@@ -54,34 +54,36 @@ const HospitalVisualizer = () => {
       />
 
       {/* Background Glows adapted for Light Mode */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 dark:bg-primary/5 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-success/10 dark:bg-success/5 rounded-full blur-3xl animate-pulse delay-1000" />
+      <div className="absolute top-1/4 left-1/4 w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 bg-primary/10 dark:bg-primary/5 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 bg-success/10 dark:bg-success/5 rounded-full blur-3xl animate-pulse delay-1000" />
 
-      {/* Hospital Departments (Nodes) - Re-organized for uniform 2x3 layout */}
-      <DepartmentNode label="OPD" color="primary" position={{ top: "12%", left: "12%" }} icon={Icons.Doctor} />
-      <DepartmentNode label="Front Desk" color="default" position={{ top: "45%", left: "8%" }} icon={Icons.Receptionist} />
-      <DepartmentNode label="Radiology" color="warning" position={{ top: "78%", left: "12%" }} icon={Icons.Radiology} />
+      {/* Hospital Departments (Nodes) - Hidden on mobile, visible on md+ */}
+      <div className="hidden md:block">
+        <DepartmentNode label="OPD" color="primary" position={{ top: "12%", left: "12%" }} icon={Icons.Doctor} />
+        <DepartmentNode label="Front Desk" color="default" position={{ top: "45%", left: "8%" }} icon={Icons.Receptionist} />
+        <DepartmentNode label="Radiology" color="warning" position={{ top: "78%", left: "12%" }} icon={Icons.Radiology} />
 
-      <DepartmentNode label="Pharmacy" color="secondary" position={{ top: "12%", right: "12%" }} icon={Icons.Pharmacy} />
-      <DepartmentNode label="Emergency" color="danger" position={{ top: "45%", right: "8%" }} icon={Icons.ER} />
-      <DepartmentNode label="Diagnostic Lab" color="success" position={{ top: "78%", right: "12%" }} icon={Icons.Lab} />
+        <DepartmentNode label="Pharmacy" color="secondary" position={{ top: "12%", right: "12%" }} icon={Icons.Pharmacy} />
+        <DepartmentNode label="Emergency" color="danger" position={{ top: "45%", right: "8%" }} icon={Icons.ER} />
+        <DepartmentNode label="Diagnostic Lab" color="success" position={{ top: "78%", right: "12%" }} icon={Icons.Lab} />
+      </div>
 
-      {/* Central Hub */}
+      {/* Central Hub - Responsive sizing */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
         <motion.div
           animate={{ scale: [1, 1.05, 1], rotate: [0, 1, -1, 0] }}
           transition={{ duration: 5, repeat: Infinity }}
-          className="w-40 h-40 border-2 border-dashed border-primary/30 rounded-full flex items-center justify-center bg-primary/5 backdrop-blur-sm"
+          className="w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 border-2 border-dashed border-primary/30 rounded-full flex items-center justify-center bg-primary/5 backdrop-blur-sm"
         >
           <div className="text-center">
-            <p className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">Core</p>
-            <Chip color="primary" variant="shadow" className="font-bold">Patient Care</Chip>
+            <p className="text-[8px] md:text-[10px] font-bold text-primary/60 uppercase tracking-widest">Core</p>
+            <Chip color="primary" variant="shadow" className="font-bold text-xs md:text-sm">Patient Care</Chip>
           </div>
         </motion.div>
       </div>
 
-      {/* Connection Lines (Visual Decor) - Re-aligned for uniform 2x3 layout */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20 transition-all duration-500">
+      {/* Connection Lines (Visual Decor) - Hidden on mobile, visible on md+ */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20 transition-all duration-500 hidden md:block">
         {/* Left Side Connectors */}
         <line x1="35%" y1="25%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-primary transition-all duration-700" />
         <line x1="32%" y1="50%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-default-400 transition-all duration-700" />
