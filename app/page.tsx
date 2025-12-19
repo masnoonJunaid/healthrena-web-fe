@@ -2,45 +2,61 @@ import { Link } from "@heroui/link";
 import { button as buttonStyles } from "@heroui/theme";
 
 import { title, subtitle } from "@/components/primitives";
+import HospitalHero from "@/components/hospital-hero";
 
 export default function Home() {
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10 w-full overflow-x-hidden">
-      <div className="w-full px-4 sm:px-8 md:px-16 lg:px-28 text-center max-w-5xl mx-auto">
-        <h1 className={title({ class: "leading-tight text-center break-normal !text-2xl sm:!text-3xl md:!text-4xl lg:!text-5xl block w-full" })}>
-          <span className="inline">Less </span>
-          <span className="inline">paperwork </span>
-          <span className="inline">and </span>
-          <span className="inline">administrative burden, </span>
-          <span className="inline">more </span>
-          <span className="inline">patient care and </span>
-          <span className={title({ color: "violet", class: "inline" })}>clinical efficiency.</span>
-          {/* <span className="inline">efficiency.</span> */}
-        </h1>
-        <div className={subtitle({ class: "mt-6 text-base sm:text-lg leading-relaxed text-center break-normal" })}>
-          Software built for doctors, by people who understand healthcare operations.
-          We know your time is valuable - every minute spent on administrative tasks is a minute away from patient care.
-          HealthRena improves your workflows, integrates with your existing systems, and helps your team focus on what matters most.
-        </div>
-      </div>
+    <section className="w-full overflow-x-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-20 py-12">
+        {/* Two-column responsive hero: text left, visualization right */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="text-left">
+            <h1
+              className={title({
+                class: "leading-tight text-left break-normal !text-2xl sm:!text-3xl md:!text-4xl lg:!text-5xl block w-full",
+              })}
+            >
+              <span className="inline">Less </span>
+              <span className="inline">paperwork </span>
+              <span className="inline">and </span>
+              <span className="inline">administrative burden, </span>
+              <span className="inline">more </span>
+              <span className="inline">patient care and </span>
+              <span className={title({ color: "violet", class: "inline" })}>Clinical Efficiency</span>
+            </h1>
 
-      <div className="flex flex-wrap gap-3 justify-center px-4">
-        <Link
-          className={buttonStyles({
-            color: "primary",
-            radius: "full",
-            variant: "shadow",
-          })}
-          href="/contact"
-        >
-          Get Started
-        </Link>
-        <Link
-          className={buttonStyles({ variant: "bordered", radius: "full" })}
-          href="/features"
-        >
-          Learn More
-        </Link>
+            <div className={subtitle({ class: "mt-6 text-base sm:text-lg leading-relaxed text-left" })}>
+              Software built for doctors, by people who understand healthcare operations.
+              We know your time is valuable - every minute spent on administrative tasks is a minute away from patient care.
+              HealthRena improves your workflows, integrates with your existing systems, and helps your team focus on what matters most.
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                className={buttonStyles({
+                  color: "primary",
+                  radius: "full",
+                  variant: "shadow",
+                })}
+                href="/contact"
+              >
+                Get Started
+              </Link>
+              <Link
+                className={buttonStyles({ variant: "bordered", radius: "full" })}
+                href="/features"
+              >
+                Learn More
+              </Link>
+            </div>
+          </div>
+
+          <div className="w-full flex justify-center lg:justify-end">
+            <div className="w-full max-w-xl">
+              <HospitalHero />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
