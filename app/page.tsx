@@ -7,7 +7,7 @@ import HospitalHero from "@/components/hospital-hero";
 export default function Home() {
   return (
     <section className="w-full overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-20 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-12">
         {/* Two-column responsive hero: text left, visualization right */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="text-left">
@@ -26,9 +26,8 @@ export default function Home() {
             </h1>
 
             <div className={subtitle({ class: "mt-6 text-base sm:text-lg leading-relaxed text-left" })}>
-              Software built for doctors, by people who understand healthcare operations.
-              We know your time is valuable - every minute spent on administrative tasks is a minute away from patient care.
-              HealthRena improves your workflows, integrates with your existing systems, and helps your team focus on what matters most.
+              HealthRena leverages AI to automate complex hospital workflows and solve operational bottlenecks,
+              allowing clinical teams to focus entirely on patient care.
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -40,7 +39,7 @@ export default function Home() {
                 })}
                 href="/contact"
               >
-                Get Started
+                Schedule a Demo
               </Link>
               <Link
                 className={buttonStyles({ variant: "bordered", radius: "full" })}

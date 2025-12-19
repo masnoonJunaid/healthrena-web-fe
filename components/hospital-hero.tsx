@@ -1,79 +1,180 @@
 "use client";
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '@heroui/card';
 import { Chip } from '@heroui/chip';
+import { Tooltip } from '@heroui/tooltip';
 
-// Minimal SVG Icons to avoid library bloat
+import { FaUserNurse, FaUserMd, FaPills, FaXRay, FaHospitalSymbol, FaUserPlus, FaUser, FaDesktop } from 'react-icons/fa';
+import { GiMicroscope } from 'react-icons/gi';
+import { MdEmergency } from 'react-icons/md';
+
+// Refined Icons using react-icons library
 const Icons = {
-  Doctor: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 14 4-4"/><path d="m3.34 19 1.4-1.4"/><path d="M5.8 22.6c1.2-1.2 2.6-2 4.2-2.3"/><path d="M2 10V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z"/><path d="M7 7h.01"/><path d="M22 10v11a2 2 0 0 1-2 2H11"/><path d="M22 10a2 2 0 0 0-2-2h-7"/></svg>
-  ),
-  Patient: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-  ),
-  Staff: () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10"/><path d="M7 12h10"/><path d="M7 17h10"/></svg>
-  )
+  Doctor: () => <FaUserMd size={20} />,
+  Nurse: () => <FaUserNurse size={20} />,
+  Patient: () => <FaUser size={20} />,
+  Pharmacy: () => <FaPills size={20} />,
+  Radiology: () => <FaXRay size={20} />,
+  ER: () => <MdEmergency size={20} />,
+  Lab: () => <GiMicroscope size={20} />,
+  Receptionist: () => <FaDesktop size={18} />
 };
+
+const DepartmentNode = ({ label, color, position, icon: Icon }: any) => (
+  <motion.div
+    className="absolute z-0"
+    style={{ ...position }}
+    initial={{ scale: 0, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    transition={{ type: "spring", stiffness: 100, delay: 0.1 }}
+  >
+    <Tooltip content={`${label} Department`}>
+      <Card className="min-w-[130px] p-3 flex flex-col items-center gap-2 backdrop-blur-md transition-all duration-300
+                      border-[0.5px] border-primary/10 bg-white/70 shadow-md hover:shadow-lg hover:border-primary/30
+                      dark:border-2 dark:border-dashed dark:border-default-200 dark:bg-background/60 dark:shadow-sm">
+        <div className={`p-2 rounded-full bg-${color}/10 text-${color} shadow-inner`}>
+          <Icon />
+        </div>
+        <Chip variant="flat" color={color as any} size="sm" className="font-semibold">{label}</Chip>
+      </Card>
+    </Tooltip>
+  </motion.div>
+);
 
 const HospitalVisualizer = () => {
   return (
-    <div className="relative w-full h-[500px] bg-background overflow-hidden rounded-3xl border-medium border-divider">
-      {/* Background Decor */}
-      <div className="absolute inset-0 opacity-20" 
-           style={{ backgroundImage: 'linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px)', backgroundSize: '50px 50px' }} />
+    <div className="relative w-full h-[550px] bg-sky-50/50 dark:bg-background overflow-hidden rounded-3xl border-[0.4px] border-divider shadow-2xl transition-colors duration-500">
+      {/* Background Decor - Refined Grid adapts to theme */}
+      <div className="absolute inset-0 opacity-[0.15] dark:opacity-10"
+        style={{
+          backgroundImage: 'radial-gradient(circle, var(--tw-prose-invert, #0ea5e9) 1px, transparent 1px)',
+          backgroundSize: '30px 30px'
+        }}
+      />
 
-      {/* Hospital "Zones" using HeroUI styling */}
-      <div className="absolute top-[10%] left-[10%] p-4 border-2 border-dashed border-default-200 rounded-2xl">
-        <Chip variant="flat" color="warning" size="sm">Administration</Chip>
-      </div>
-      
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 border-2 border-dashed border-primary-200 rounded-full flex items-center justify-center">
-        <Chip color="primary" variant="shadow">Patient Care</Chip>
+      {/* Background Glows adapted for Light Mode */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 dark:bg-primary/5 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-success/10 dark:bg-success/5 rounded-full blur-3xl animate-pulse delay-1000" />
+
+      {/* Hospital Departments (Nodes) - Re-organized for uniform 2x3 layout */}
+      <DepartmentNode label="OPD" color="primary" position={{ top: "12%", left: "12%" }} icon={Icons.Doctor} />
+      <DepartmentNode label="Front Desk" color="default" position={{ top: "45%", left: "8%" }} icon={Icons.Receptionist} />
+      <DepartmentNode label="Radiology" color="warning" position={{ top: "78%", left: "12%" }} icon={Icons.Radiology} />
+
+      <DepartmentNode label="Pharmacy" color="secondary" position={{ top: "12%", right: "12%" }} icon={Icons.Pharmacy} />
+      <DepartmentNode label="Emergency" color="danger" position={{ top: "45%", right: "8%" }} icon={Icons.ER} />
+      <DepartmentNode label="Diagnostic Lab" color="success" position={{ top: "78%", right: "12%" }} icon={Icons.Lab} />
+
+      {/* Central Hub */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
+        <motion.div
+          animate={{ scale: [1, 1.05, 1], rotate: [0, 1, -1, 0] }}
+          transition={{ duration: 5, repeat: Infinity }}
+          className="w-40 h-40 border-2 border-dashed border-primary/30 rounded-full flex items-center justify-center bg-primary/5 backdrop-blur-sm"
+        >
+          <div className="text-center">
+            <p className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">Core</p>
+            <Chip color="primary" variant="shadow" className="font-bold">Patient Care</Chip>
+          </div>
+        </motion.div>
       </div>
 
-      <div className="absolute bottom-[10%] right-[10%] p-4 border-2 border-dashed border-default-200 rounded-2xl">
-        <Chip variant="flat" color="success" size="sm">Diagnostics</Chip>
-      </div>
+      {/* Connection Lines (Visual Decor) - Re-aligned for uniform 2x3 layout */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20 transition-all duration-500">
+        {/* Left Side Connectors */}
+        <line x1="35%" y1="25%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-primary transition-all duration-700" />
+        <line x1="32%" y1="50%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-default-400 transition-all duration-700" />
+        <line x1="35%" y1="75%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-warning transition-all duration-700" />
+        {/* Right Side Connectors */}
+        <line x1="65%" y1="25%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-secondary transition-all duration-700" />
+        <line x1="68%" y1="50%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-danger transition-all duration-700" />
+        <line x1="65%" y1="75%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-success transition-all duration-700" />
+      </svg>
 
-      {/* Animated Agents */}
-      <MovingAgent role="Doctor" color="text-primary" icon={<Icons.Doctor />} delay={0} />
-      <MovingAgent role="Nurse" color="text-success" icon={<Icons.Doctor />} delay={4} />
-      <MovingAgent role="Staff" color="text-secondary" icon={<Icons.Staff />} delay={8} />
-      <MovingAgent role="Patient" color="text-default-400" icon={<Icons.Patient />} delay={2} />
+      {/* Animated Agents with updated uniform paths */}
+      <MovingAgent role="Receptionist" color="text-default-500" icon={<Icons.Receptionist />} delay={0}
+        path={[
+          { left: '8%', top: '45%' },  // Front Desk
+          { left: '12%', top: '12%' }, // OPD
+          { left: '8%', top: '45%' },  // Front Desk
+          { left: '50%', top: '50%' }, // Core
+        ]}
+      />
+      <MovingAgent role="Sr. Doctor" color="text-primary" icon={<Icons.Doctor />} delay={5}
+        path={[
+          { left: '12%', top: '12%' }, // OPD
+          { left: '50%', top: '50%' }, // Core
+          { left: '92%', top: '45%' }, // ER
+          { left: '50%', top: '50%' }, // Core
+        ]}
+      />
+      <MovingAgent role="Staff Nurse" color="text-success" icon={<Icons.Nurse />} delay={8}
+        path={[
+          { left: '50%', top: '50%' }, // Core
+          { left: '92%', top: '45%' }, // ER
+          { left: '12%', top: '12%' }, // OPD
+          { left: '50%', top: '50%' }, // Core
+        ]}
+      />
+      <MovingAgent role="Pharmacist" color="text-secondary" icon={<Icons.Pharmacy />} delay={12}
+        path={[
+          { left: '88%', top: '12%' }, // Pharmacy
+          { left: '50%', top: '50%' }, // Core
+          { left: '88%', top: '78%' }, // Lab (Right bottom)
+          { left: '50%', top: '50%' }, // Core
+        ]}
+      />
+      <MovingAgent role="Technician" color="text-warning" icon={<Icons.Radiology />} delay={18}
+        path={[
+          { left: '12%', top: '78%' }, // Radiology
+          { left: '50%', top: '50%' }, // Core
+          { left: '92%', top: '45%' }, // ER
+          { left: '50%', top: '50%' }, // Core
+        ]}
+      />
+      <MovingAgent role="Patient" color="text-default-400" icon={<Icons.Patient />} delay={2}
+        path={[
+          { left: '8%', top: '45%' },  // Front Desk
+          { left: '12%', top: '12%' }, // OPD
+          { left: '12%', top: '75%' }, // Radiology
+          { left: '50%', top: '50%' }, // Core
+          { left: '88%', top: '12%' }, // Pharmacy
+        ]}
+      />
     </div>
   );
 };
 
-const MovingAgent = ({ icon, color, delay, role }: any) => {
-  const path = [
-    { left: '15%', top: '20%' }, // Admin
-    { left: '50%', top: '50%' }, // Patient Care
-    { left: '85%', top: '80%' }, // Diagnostics
-    { left: '50%', top: '50%' }, // Patient Care
-    { left: '15%', top: '20%' }, // Loop
-  ];
-
+const MovingAgent = ({ icon, color, delay, role, path }: any) => {
   return (
     <motion.div
       initial={path[0]}
       animate={{
-        left: path.map(p => p.left),
-        top: path.map(p => p.top),
+        left: path.map((p: any) => p.left),
+        top: path.map((p: any) => p.top),
       }}
       transition={{
-        duration: 20,
+        duration: 25,
         repeat: Infinity,
-        ease: "easeInOut",
+        ease: "linear",
         delay: delay
       }}
       className="absolute z-10"
     >
-      <Card className="flex flex-row items-center gap-2 p-2 px-3 shadow-lg border-none" isBlurred>
+      <Card className="flex flex-row items-center gap-2 p-1.5 px-3 shadow-xl border-none bg-background/80 backdrop-blur-md" isBlurred>
         <div className={color}>{icon}</div>
-        <span className="text-[10px] font-bold uppercase text-default-500">{role}</span>
+        <div className="flex flex-col">
+          <span className="text-[9px] font-bold uppercase text-default-500 leading-none">{role}</span>
+          <span className="text-[7px] text-primary/60 font-medium">In Transit</span>
+        </div>
       </Card>
+      {/* Trace effect */}
+      <motion.div
+        className={`absolute inset-0 rounded-xl blur-md -z-10 ${color.replace('text-', 'bg-')}/20`}
+        animate={{ opacity: [0.2, 0.5, 0.2] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      />
     </motion.div>
   );
 };
