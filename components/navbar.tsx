@@ -28,6 +28,8 @@ import {
   SearchIcon,
   Logo,
 } from "@/components/icons";
+import Image from "next/image";
+import healthRenaLogo from '../assets/health_rena_logo.png'
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -58,7 +60,7 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            {/* <Logo /> */}
+            <Image src={healthRenaLogo} alt="HealthRena Logo" className="w-10 h-10" height={40} width={40} />
             <p className={title({ color: "violet", class: "text-xl lg:text-2xl font-bold tracking-tight" })}>
               HealthRena
             </p>
